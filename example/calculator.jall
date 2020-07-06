@@ -2,7 +2,7 @@
 # 示例代码:四则计算器
 # 下面是非终结符号声明
 
-#"L()float"中,"L"是符号名称,括号中为需要的参数类型声明,比如"(float)"意味此符号前方必须有一个"float"的值待归约,"float"是符号类型结果
+# "L()float"中,"L"是符号名称,括号中为需要的参数类型声明,比如"(float)"意味此符号前方必须有一个"float"的值待归约,"float"是符号类型结果
 L()float
 E()float
 T()float
@@ -24,7 +24,6 @@ E -> T;
 
 T -> T mut > F {mut(3)float};
 T -> T div > F {div(3)float};
-T -> T div > div > F {div(4)float};
 T -> F;
 
 F -> id > {value(1)float};
