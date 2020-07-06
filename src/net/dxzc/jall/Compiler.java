@@ -146,7 +146,8 @@ public class Compiler {
                         Symbol useSymbol = symbolMap.get(firstToken);
                         if (useSymbol == null) {
                             useSymbol = new Symbol(symbol.name + "_" + p++, symbol.type, symbol.input);
-                            language.symbols.add(i++, useSymbol);
+                            language.symbols.add(++i, useSymbol);
+                            i++;
                             Node[] nodes = new Node[depth + 1];
                             System.arraycopy(item.defines, 0, nodes, 0, depth);
                             nodes[depth] = useSymbol;
@@ -164,80 +165,6 @@ public class Compiler {
             symbol.items.clear();
             symbol.items.addAll(newItem);
         }
-    }
-
-    public String compile(Language language) {
-        // 创建空产生式信息
-        Item[] empty = new Item[language.symbols.size()];
-        for (int i = 0; i < language.symbols.size(); i++) {
-            Symbol symbol = language.symbols.get(i);
-            for (int t = 0; t < symbol.items.size(); t++) {
-                Item item = symbol.items.get(t);
-                int firstIndex = item.getFirstNameIndex();
-                if (firstIndex < 0) {
-                    if (empty[i] != null) {
-                        throw new RuntimeException();
-                    } else {
-                        empty[i] = item;
-                    }
-                }
-            }
-        }
-
-        StringBuilder code = new StringBuilder();
-        for (int i = 0; i < language.symbols.size(); i++) {
-            Symbol symbol = language.symbols.get(i);
-            if (i == 0) {
-                code.append("public ").append(symbol.type).append(" parser").append("(");
-                if (symbol.input.length != 0) {
-                    code.append(symbol.input[0]).append(" v0");
-                    for (int t = 1; t < symbol.input.length; t++) {
-                        code.append(", ").append(symbol.input[0]).append(" v").append(t);
-                    }
-                }
-                code.append(") {\n");
-                code.append("next();\n");
-                code.append("return ").append(symbol.name).append("(");
-                if (symbol.input.length != 0) {
-                    code.append("v0");
-                    for (int t = 1; t < symbol.input.length; t++) {
-                        code.append(", v").append(t);
-                    }
-                }
-                code.append(");\n");
-                code.append("}\n\n");
-            }
-            MethodBuilder builder = new MethodBuilder("private", symbol.name, symbol.type, symbol.input);
-            builder.sb.append("switch(token){\n");
-            LinkedList<Token> need = new LinkedList<>();
-            for (Item item : symbol.items) {
-                int firstIndex = item.getFirstNameIndex();
-                if (firstIndex < 0) {
-                    continue;
-                }
-                need.add((Token) item.defines[firstIndex]);
-                builder.sb.append("case ").append(item.defines[firstIndex]).append(":{\n");
-                builder.item(item);
-                builder.sb.append("}\n");
-            }
-            builder.sb.append("default:{\n");
-            if (empty[i] != null) {
-                builder.item(empty[i]);
-            } else {
-                builder.sb.append("throw need(token");
-                while (!need.isEmpty()) {
-                    builder.sb.append(", ");
-                    builder.sb.append(need.poll().name);
-                }
-                builder.sb.append(");\n");
-            }
-            builder.sb.append("}\n");
-
-            builder.sb.append("}\n");
-            code.append(builder.end());
-        }
-
-        return code.toString();
     }
 
 }

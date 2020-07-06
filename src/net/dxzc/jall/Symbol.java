@@ -24,22 +24,28 @@ public class Symbol extends Name {
 
     protected final ArrayList<Item> items = new ArrayList<>();
 
+    public String toSymbolString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append("(");
+        if (input.length > 0) {
+            sb.append(input[0]);
+            for (int i = 1; i < input.length; i++) {
+                sb.append(",");
+                sb.append(input[i]);
+            }
+        }
+        sb.append(")");
+        sb.append(type);
+        return sb.toString();
+    }
+
     public String toItemString() {
         if (items.isEmpty()) {
             return "Error symbol";
         } else {
             StringBuilder sb = new StringBuilder();
-            sb.append(name);
-            sb.append("(");
-            if (input.length > 0) {
-                sb.append(input[0]);
-                for (int i = 1; i < input.length; i++) {
-                    sb.append(",");
-                    sb.append(input[i]);
-                }
-            }
-            sb.append(")");
-            sb.append(type);
+            sb.append(toSymbolString());
             sb.append("\n");
             for (Item item : items) {
                 sb.append(name);

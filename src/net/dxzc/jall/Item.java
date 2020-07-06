@@ -153,11 +153,9 @@ public final class Item {
         return res;
     }
 
-
-    @Override
-    public String toString() {
+    public String toSource() {
         if (defines.length == 0) {
-            return "ε";
+            return "";
         } else {
             StringBuilder sb = new StringBuilder(defines[0].toString());
             for (int i = 1; i < defines.length; i++) {
@@ -165,6 +163,15 @@ public final class Item {
                 sb.append(defines[i].toString());
             }
             return sb.toString();
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (defines.length == 0) {
+            return "ε";
+        } else {
+            return toSource();
         }
     }
 
