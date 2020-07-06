@@ -1,9 +1,7 @@
 package net.dxzc.jall;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 非终结符号产生式.

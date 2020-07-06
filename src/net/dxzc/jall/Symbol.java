@@ -1,7 +1,6 @@
 package net.dxzc.jall;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,6 +8,13 @@ import java.util.List;
  */
 public class Symbol extends Name {
 
+    /**
+     * 构建一个非终结符号.
+     *
+     * @param name  名字
+     * @param type  类型
+     * @param input 需要的参数
+     */
     public Symbol(String name, String type, String... input) {
         super(name);
         if (type == null) {
@@ -18,12 +24,35 @@ public class Symbol extends Name {
         this.type = type;
     }
 
+    /**
+     * 需要的参数类型.
+     */
     protected final String[] input;
 
-    protected final String type;
+    /**
+     * 返回的类型.
+     */
+    public final String type;
 
-    protected final ArrayList<Item> items = new ArrayList<>();
+    /**
+     * 产生式集.
+     */
+    public final List<Item> items = new ArrayList<>();
 
+    /**
+     * 得到需要参数类型的拷贝.
+     *
+     * @return 需要的参数类型
+     */
+    public String[] getInput() {
+        return input.clone();
+    }
+
+    /**
+     * 得到符号的声明.
+     *
+     * @return 符号声明
+     */
     public String toSymbolString() {
         StringBuilder sb = new StringBuilder();
         sb.append(name);
@@ -40,6 +69,11 @@ public class Symbol extends Name {
         return sb.toString();
     }
 
+    /**
+     * 得到符号语言的表述.
+     *
+     * @return 描述
+     */
     public String toItemString() {
         if (items.isEmpty()) {
             return "Error symbol";

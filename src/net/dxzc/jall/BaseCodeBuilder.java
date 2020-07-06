@@ -92,5 +92,4 @@ public abstract class BaseCodeBuilder implements CodeBuilder {
 
     protected abstract void action(Action action);
 
-
 }

@@ -5,8 +5,18 @@ import java.util.*;
 
 public class Language {
 
-    protected final List<Symbol> symbols = new ArrayList<>();
+    /**
+     * 语言包含的语法符号.
+     */
+    public final List<Symbol> symbols = new ArrayList<>();
 
+    /**
+     * 比较两个语法符号的先后顺序.
+     *
+     * @param a 语法符号
+     * @param b 语法符号
+     * @return {@code -1,0,1}
+     */
     public int compare(Symbol a, Symbol b) {
         if (a == b) {
             return 0;
@@ -22,6 +32,11 @@ public class Language {
         return 0;
     }
 
+    /**
+     * 输出语法的描述.
+     *
+     * @return 描述的语法
+     */
     public String toLanguageString() {
         if (symbols.isEmpty()) {
             return "Empty language";
@@ -35,6 +50,11 @@ public class Language {
         }
     }
 
+    /**
+     * 输出对应的语法描述语言.
+     *
+     * @return 语法描述
+     */
     public String toSource() {
         StringBuilder sb = new StringBuilder();
         for (Symbol symbol : symbols) {

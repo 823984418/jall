@@ -94,7 +94,7 @@ public class CCodeBuilder extends BaseCodeBuilder {
         }
         if (!nu) {
             indent(1);
-            code("return need(token");
+            code("need(token");
             while (!tokens.isEmpty()) {
                 code(", ");
                 code(tokens.pop().name);

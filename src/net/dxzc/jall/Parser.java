@@ -1,26 +1,29 @@
 package net.dxzc.jall;
 
-import net.dxzc.jall.Language;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * 语法描述语言的解析器.
+ */
 public class Parser {
 
-    public Parser() {
+    private char[] buff;
+    private int pos;
 
-    }
-
-    char[] buff;
-    int pos;
-
+    /**
+     * 从语法描述语言中得到描述的语法.
+     *
+     * @param code 描述语言
+     * @return 语法
+     */
     public Language parser(String code) {
         buff = code.toCharArray();
         pos = 0;
         return parser();
     }
 
-    void skip() {
+    private void skip() {
         for (; ; ) {
             if (pos == buff.length) {
                 return;
@@ -44,7 +47,7 @@ public class Parser {
         }
     }
 
-    String readUtil(String c) {
+    private String readUtil(String c) {
         char[] cs = c.toCharArray();
         StringBuilder sb = new StringBuilder();
         for (; ; ) {
@@ -62,7 +65,7 @@ public class Parser {
         }
     }
 
-    Language parser() {
+    private Language parser() {
         Language language = new Language();
         HashMap<String, Symbol> map = new HashMap<>();
         HashMap<String, Token> tokens = new HashMap<>();

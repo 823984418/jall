@@ -1,6 +1,5 @@
 package net.dxzc.jall;
 
-import javax.tools.JavaCompiler;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,8 +34,8 @@ public class Main {
         }
         Language language = new Parser().parser(code);
         Compiler compiler = new Compiler();
-        compiler.leftInit(language);
-        compiler.afterInit(language);
+        compiler.eliminateLeftRecursion(language);
+        compiler.extractLeftCommonFactor(language);
         if (args.length == 1) {
             System.out.println(language.toLanguageString());
         } else {

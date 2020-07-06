@@ -2,9 +2,17 @@ package net.dxzc.jall;
 
 import java.util.*;
 
+/**
+ * 为语法提供消左递归和提左公因子的操作.
+ */
 public class Compiler {
 
-    public void leftInit(Language language) {
+    /**
+     * 消除左递归.
+     *
+     * @param language 处理的语言
+     */
+    public void eliminateLeftRecursion(Language language) {
         for (int i = 0; i < language.symbols.size(); i++) {
             Symbol symbol = language.symbols.get(i);
             LinkedList<Item> ll = new LinkedList<>();
@@ -58,7 +66,12 @@ public class Compiler {
 
     }
 
-    public void afterInit(Language language) {
+    /**
+     * 提取左公因子.
+     *
+     * @param language 处理的语言
+     */
+    public void extractLeftCommonFactor(Language language) {
         for (int i = language.symbols.size() - 1; i >= 0; i--) {
             Symbol symbol = language.symbols.get(i);
             // 以Token开头的相同公因子深度
