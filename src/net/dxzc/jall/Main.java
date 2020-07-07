@@ -33,7 +33,9 @@ public class Main {
             return;
         }
         Language language = new Parser().parser(code);
+        System.out.println(language.toSource());
         Compiler compiler = new Compiler();
+        compiler.stackCheck(language);
         compiler.eliminateLeftRecursion(language);
         compiler.extractLeftCommonFactor(language);
         if (args.length == 1) {
@@ -51,13 +53,13 @@ public class Main {
                         builder.packageName = args[2].substring(0, args[2].lastIndexOf('.'));
                         builder.className = args[2].substring(args[2].lastIndexOf('.') + 1);
                     }
-                    if(args.length > 3){
+                    if (args.length > 3) {
                         builder.heads = args[3];
                     }
-                    if(args.length > 4){
+                    if (args.length > 4) {
                         builder.exceptions = args[4];
                     }
-                    if(args.length > 5){
+                    if (args.length > 5) {
                         builder.tokenType = args[5];
                     }
                     codeBuilder = builder;
@@ -65,7 +67,7 @@ public class Main {
                 }
                 case "c": {
                     CCodeBuilder builder = new CCodeBuilder();
-                    if(args.length > 2){
+                    if (args.length > 2) {
                         builder.tokenType = args[2];
                     }
                     codeBuilder = builder;

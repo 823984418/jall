@@ -180,4 +180,35 @@ public class Compiler {
         }
     }
 
+    public void stackCheck(Language language) {
+        for (Symbol symbol : language.symbols) {
+            for (Item item : symbol.items) {
+                int stack = symbol.input.length;
+                for (int i = 0; i < item.defines.length; i++) {
+                    Node node = item.defines[i];
+                    if (node instanceof Push) {
+                        stack += ((Push) node).count;
+                    } else if (node instanceof Action) {
+                        if (stack < ((Action) node).count) {
+                            throw new RuntimeException("归约越栈" + symbol.toSymbolString() + " -> " + item + ";"
+                                    + "(" + i + ")" + stack + ":" + ((Action) node).count);
+                        }
+                        stack -= ((Action) node).count;
+                        stack++;
+                    } else if (node instanceof Symbol) {
+                        if (stack < ((Symbol) node).input.length) {
+                            throw new RuntimeException("符号越栈" + symbol.toSymbolString() + " -> " + item + ";"
+                                    + "(" + i + ")" + stack + ":" + ((Symbol) node).input.length);
+                        }
+                        stack -= ((Symbol) node).input.length;
+                        stack++;
+                    }
+                }
+                if (stack != 1) {
+                    throw new RuntimeException("错误的栈深度" + symbol.toSymbolString() + " -> " + item + ";" + stack);
+                }
+            }
+        }
+    }
+
 }
