@@ -189,18 +189,20 @@ public class Compiler {
                     if (node instanceof Push) {
                         stack += ((Push) node).count;
                     } else if (node instanceof Action) {
-                        if (stack < ((Action) node).count) {
+                        Action actionNode = (Action) node;
+                        if (stack < actionNode.count) {
                             throw new RuntimeException("归约越栈" + symbol.toSymbolString() + " -> " + item + ";"
-                                    + "(" + i + ")" + stack + ":" + ((Action) node).count);
+                                    + "(" + i + ")" + stack + ":" + actionNode.count);
                         }
-                        stack -= ((Action) node).count;
+                        stack -= actionNode.count;
                         stack++;
                     } else if (node instanceof Symbol) {
-                        if (stack < ((Symbol) node).input.length) {
+                        Symbol symbolNode = (Symbol) node;
+                        if (stack < symbolNode.input.length) {
                             throw new RuntimeException("符号越栈" + symbol.toSymbolString() + " -> " + item + ";"
-                                    + "(" + i + ")" + stack + ":" + ((Symbol) node).input.length);
+                                    + "(" + i + ")" + stack + ":" + symbolNode.input.length);
                         }
-                        stack -= ((Symbol) node).input.length;
+                        stack -= symbolNode.input.length;
                         stack++;
                     }
                 }

@@ -33,7 +33,6 @@ public class Main {
             return;
         }
         Language language = new Parser().parser(code);
-        System.out.println(language.toSource());
         Compiler compiler = new Compiler();
         compiler.stackCheck(language);
         compiler.eliminateLeftRecursion(language);
