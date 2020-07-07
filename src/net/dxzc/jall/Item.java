@@ -26,6 +26,9 @@ public final class Item {
                 nodes.add(node);
             }
         }
+        if (push != 0) {
+            nodes.add(new Push(push));
+        }
         this.defines = nodes.toArray(new Node[nodes.size()]);
     }
 
