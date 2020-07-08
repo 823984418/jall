@@ -147,6 +147,7 @@ public class Compiler {
             HashMap<Token, Symbol> symbolMap = new HashMap<>();
             int p = 0;
             LinkedList<Item> newItem = new LinkedList<>();
+            boolean add = false;
             for (int t = 0; t < symbol.items.size(); t++) {
                 Item item = symbol.items.get(t);
                 int firstIndex = item.getFirstNameIndex();
@@ -160,7 +161,7 @@ public class Compiler {
                         if (useSymbol == null) {
                             useSymbol = new Symbol(symbol.name + "_" + p++, symbol.type, symbol.input);
                             language.symbols.add(++i, useSymbol);
-                            i++;
+                            add = true;
                             Node[] nodes = new Node[depth + 1];
                             System.arraycopy(item.defines, 0, nodes, 0, depth);
                             nodes[depth] = useSymbol;
@@ -174,6 +175,9 @@ public class Compiler {
                 } else {
                     newItem.add(item);
                 }
+            }
+            if (add) {
+                i++;
             }
             symbol.items.clear();
             symbol.items.addAll(newItem);

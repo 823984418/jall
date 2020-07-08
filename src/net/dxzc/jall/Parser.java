@@ -139,7 +139,11 @@ public class Parser {
                     }
                 }
             }
-            map.get(name).items.add(new Item(nodes.toArray(new Node[nodes.size()])));
+            Symbol symbol = map.get(name);
+            if (symbol == null) {
+                throw new RuntimeException("符号" + name + "未声明");
+            }
+            symbol.items.add(new Item(nodes.toArray(new Node[nodes.size()])));
         }
         return language;
     }

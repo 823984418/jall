@@ -4,43 +4,8 @@ import java.util.LinkedList;
 
 public class JavaCodeBuilder extends BaseCodeBuilder {
 
-    public static final String IMPORT_CODE = "\n" +
-            "import java.util.LinkedList;\n" +
-            "import java.util.Arrays;\n" +
-            "\n";
-
-    public static final String CODE = "\n" +
-            "    protected int token;\n" +
-            "\n" +
-            "    private LinkedList<String> queue = new LinkedList<>();\n" +
-            "\n" +
-            "    protected void check(int token) {\n" +
-            "        if (this.token != token) {\n" +
-            "            throw need(this.token, token);\n" +
-            "        }\n" +
-            "        next();\n" +
-            "    }\n" +
-            "\n" +
-            "    protected void next() {\n" +
-            "        queue.add(onNext());\n" +
-            "    }\n" +
-            "\n" +
-            "    protected String onNext(){\n" +
-            "        return null;// TODO\n" +
-            "    }\n" +
-            "\n" +
-            "    protected RuntimeException need(int token, int... needs) {\n" +
-            "        return new RuntimeException(\"需要\" + Arrays.toString(needs) + \"但只有\" + token);\n" +
-            "    }\n" +
-            "\n" +
-            "    protected String push() {\n" +
-            "        return queue.pollFirst();\n" +
-            "    }\n" +
-            "\n";
-
     protected String packageName;
     protected String className = "Parser";
-    protected boolean code = true;
     protected String indent = "    ";
     protected String heads = "private";
     protected boolean use = true;
@@ -61,15 +26,9 @@ public class JavaCodeBuilder extends BaseCodeBuilder {
             code(packageName);
             code(";\n");
         }
-        if (code) {
-            code(IMPORT_CODE);
-        }
         code("public class ");
         code(className);
-        code(" {\n");
-        if (code) {
-            code(CODE);
-        }
+        code(" {\n\n");
         if (use) {
             Symbol symbol = language.symbols.get(0);
             indent(1);

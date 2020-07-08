@@ -4,9 +4,6 @@ import java.util.LinkedList;
 
 public class CCodeBuilder extends BaseCodeBuilder {
 
-    public static final String CODE = "";
-
-    protected boolean code = true;
     protected String indent = "    ";
     protected boolean use = true;
     protected String tokenType = "char*";
@@ -19,9 +16,6 @@ public class CCodeBuilder extends BaseCodeBuilder {
 
     @Override
     protected void buildLanguage(Language language) {
-        if (code) {
-            code(CODE);
-        }
         if (use) {
             Symbol symbol = language.symbols.get(0);
             indent(0);
